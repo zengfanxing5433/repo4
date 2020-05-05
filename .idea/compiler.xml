@@ -14,7 +14,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="userservice" target="1.8" />
+      <module name="add_eureka_server" target="1.8" />
+      <module name="consumer_service" target="1.8" />
+      <module name="day13_cloud_demo" target="1.8" />
+      <module name="eureka_server" target="1.8" />
+      <module name="user_service" target="1.8" />
+      <module name="zuul_service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

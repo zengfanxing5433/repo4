@@ -16,4 +16,7 @@ public class TestGit {
     private void test () {
         System.out.println("fsf");
     }
+
+    private void test2 () {
+    }
 }
