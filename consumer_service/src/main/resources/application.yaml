@@ -1,0 +1,40 @@
+server:
+  port: 8067
+spring:
+  application:
+    name: consumer-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka,
+                   http://127.0.0.1:8848/eureka
+#修改负载均衡规则的配置入口
+#user-service:
+  #ribbon:
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #改为随机规则,(默认轮询)
+    #重试机制
+    #ConnectTimeout: 250 # Ribbon的连接超时时间
+    #ReadTimeout: 1000 # Ribbon的数据读取超时时间
+    #OkToRetryOnAllOperations: true # 是否对所有操作都进行重试
+    #MaxAutoRetriesNextServer: 1 # 切换实例的重试次数
+    #MaxAutoRetries: 1 # 对当前实例的重试次数
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+    user-service:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+#通过feign配置robbin超时
+robbin:
+  ConnectionTimeOut: 500 #建立连接的超时时长, 默认1s
+  ReadTimeOunt: 2000 #读取的数据超时时长, 默认1s
+#fegin开启熔断功能
+feign:
+  hystrix:
+    enabled: true

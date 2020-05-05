@@ -1,0 +1,21 @@
+server:
+  port: 8848   #默认值为8761
+
+Spring:
+  application:
+    name: eureka-server  #配置服务的名称
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka  #配置Eureka服务地址
+    #register-with-eureka: false  #禁止自己当做服务注册
+    #registry-fetch-interval-seconds: 15  #消费者拉取服务的周期, 默认30s
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1   #配置服务器地址(从该地址拉取,注册)
+    #lease-renewal-interval-in-seconds: 45   #心跳频率(服务续约周期), 默认30s
+    #lease-expiration-duration-in-seconds: 180  #最小过期时长(90s都没发心跳就认为断开了服务,没清除), 默认90s
+  #server:
+    #eviction-interval-timer-in-ms: 30000  #失效剔除时长, 默认60 * 1000
+    #enable-self-preservation: false  #关闭自我保护模式, 默认true(打开)

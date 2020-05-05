@@ -1,0 +1,37 @@
+server:
+  port: 10010
+
+zuul:
+  #zuul配置面向服务的路由(网关), 自动实现负载均衡
+  routes:
+    #通过localhost:10010/user-service/** 访问localhost:8077/user-service/**
+    user-service:   #id(常和服务Id一致, 也可以随便配- -)
+      path: /user/**  #路由匹配的前缀路径
+      #url: http://127.0.0.1:8077  #ip地址(凡是路径以/user开始都分配到该url: 127.0.0.1:8077)
+      serviceId: user-service #根据serviceId从eureka注册中心拉取服务
+      strip-prefix: false  #去除前缀path: .../user/user/10 ==> .../user/10strip-prefix: tru
+    #简化版本(默认配置,即不配置也可以: 自动从Eureka拉取服务Id生成 key-value ==> serviceId <==> path)
+    consumer-service: /consumer-service/**  #默认生成
+  #配置忽略拉取的服务ID
+  ignored-services:
+    consumer-service
+  #全局的前缀(没什么用= =)
+  #prefix: /api
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8848/eureka
+ribbon:
+  ConnectTimeout: 250 # 创建连接超时时间(ms)
+  ReadTimeout: 2000 # 读取数据超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 2 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数
+  #超时时长: ribbonTimeOut = (ribbonReadTimeout + ribbonConnectTimeout) * (MaxAutoRetries + 1) * (MaxAutoRetriesNextServer + 2)
+hystrix:
+  command:
+  	default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 6000 # 熔断超时时长>ribbonTimeOut：6000ms(默认1s, 太短, 建议手动配置)
